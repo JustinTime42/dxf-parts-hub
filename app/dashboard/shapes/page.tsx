@@ -9,7 +9,7 @@ const ShapeSelector: React.FC = () => {
         {shapes.map((image, index) => (
           <div>
             <h3>Select Part Template</h3>
-            <Link href={`/shape-editor/${image.name}`} passHref>
+            <Link href={`/shapes/${image.name}`} passHref>
             <Image src={`/shapes/${image.image_path}`} alt={`Image ${index}`} width={256} height={256}/>
             </Link>
           </div>
