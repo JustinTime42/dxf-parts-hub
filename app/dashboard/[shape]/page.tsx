@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import {shapes} from '../../../../utils/shapes';
+import {shapes} from '../../../utils/shapes';
 import Image from 'next/image';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
