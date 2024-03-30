@@ -30,6 +30,11 @@ export default function Navlinks({ user }: NavlinksProps) {
               Account
             </Link>
           )}
+          {user && (
+            <Link href="/dashboard" className={s.link}>
+              Dashboard
+            </Link>
+          )}
         </nav>
       </div>
       <div className="flex justify-end space-x-8">

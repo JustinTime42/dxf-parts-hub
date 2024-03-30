@@ -7,8 +7,8 @@ import { getURL } from '@/utils/helpers';
 import 'styles/main.css';
 
 const meta = {
-  title: 'Next.js Subscription Starter',
-  description: 'Brought to you by Vercel, Stripe, and Supabase.',
+  title: 'DXF Parts Hub',
+  description: 'Quickly customize and generate DXF files for standard parts',
   cardImage: '/og.png',
   robots: 'follow, index',
   favicon: '/favicon.ico',
