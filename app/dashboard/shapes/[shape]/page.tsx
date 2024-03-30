@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {shapes} from '../../../../utils/shapes';
 import Image from 'next/image';
 import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
 
 type ShapeEditorProps = {
   params: {
@@ -113,7 +114,6 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
           <Button 
             style={{margin: '1rem'}} 
             type="button" 
-            variant="contained" 
             color="primary"
             onClick={() => handleSubmit(false)}
           >
@@ -121,8 +121,7 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
           </Button>
           <Button 
             style={{margin: '1rem'}} 
-            type="button" 
-            variant="contained" 
+            type="button"  
             color="primary"
             onClick={() => handleSubmit(true)}
           >
