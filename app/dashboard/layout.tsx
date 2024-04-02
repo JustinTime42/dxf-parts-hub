@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const DashboardLayout = ({
@@ -7,17 +8,11 @@ const DashboardLayout = ({
   }) => {
     return (
         <div className="flex">
-            <div className="w-1/4 bg-gray-200">
+            <div className="w-1/4">
                 <h1 className="text-2xl font-bold p-4">Dashboard</h1>
                 <nav className="p-4">
-                    <ul>
-                        <li>
-                            <a href="/shape-selector">Shape Selector</a>
-                        </li>
-                        <li>
-                            <a href="/library">Library</a>
-                        </li>
-                    </ul>
+                    <Link href="/dashboard/shape-selector">Shape Selector</Link>
+                    <Link href="/dashboard/library">Library</Link>
                 </nav>
             </div>
             <div className="w-3/4 p-4">

@@ -1,9 +1,10 @@
 'use client'
-import React, { useEffect, useState } from 'react';
-import {shapes} from '../../../utils/shapes';
+import React, { use, useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
+import { Database } from '@/types_db';
+import { createClient } from '@/utils/supabase/client';
 
 type ShapeEditorProps = {
   params: {
@@ -11,9 +12,20 @@ type ShapeEditorProps = {
   };
 };
 
+type ShapesTemplates = {
+  shapesTemplates: Database['public']['Tables']['shapes_templates']['Row'] | null;
+};
+
+type Dimension = {
+  name: string;
+  value: number;
+  label: string;
+};
+
 const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: string } }) => {
 
-  const [shape, setShape] = useState(shapes.find((shape) => shape.name === params.shape) || null);
+  const supabase = createClient();
+  const [shape, setShape] = useState<ShapesTemplates["shapesTemplates"]>(null);
   const [dimensions, setDimensions] = useState<{[key: string]: number | string}>({});
   const [spacing, setSpacing] = useState('');
   const [rows, setRows] = useState(0);
@@ -22,11 +34,27 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
   const [svgFile, setSvgFile] = useState('');
 
 
-  useEffect(() => {
-    if (params.shape) {
-      setShape(shapes.find((shape) => shape.name === params.shape) || null);
+  const getShape = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('shapes_templates')
+        .select('*')
+        .eq('name', params.shape)
+        .single();
+      if (error) {
+        throw error;
+      }
+      if (data) {
+        setShape(data);
+      }
+    } catch (error) {
+      console.log('error', error);
     }
-  }, [params.shape]);
+  }, [supabase, params.shape]);
+
+  useEffect(() => {
+    getShape();
+  }, [getShape]);
 
   const handleSubmit = async (shouldMakeFile: boolean) => {
     const numbers: { [key: string]: number } = {}; 
@@ -70,7 +98,7 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
         <div>
           {
             shape.dimensions &&
-            shape.dimensions.map((dimension, index) => {
+            (shape.dimensions as Array<Dimension>).map((dimension, index) => {
               return (
                 <Input
                   style={{margin: '1rem'}}
