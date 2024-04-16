@@ -9,7 +9,7 @@ import io
 
 app = Flask(__name__)
 
-@app.route('/api/generate_gasket', methods=['POST'])
+@app.route('/generate_gasket', methods=['POST'])
 def generate_gasket():
     data = request.get_json()
     inside_diameter = float(data.get('inside_diameter'))
