@@ -5,6 +5,7 @@ import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { Database } from '@/types_db';
 import { createClient } from '@/utils/supabase/client';
+import { makeDXF } from '@/app/api/makeDXF';
 
 type ShapeEditorProps = {
   params: {
@@ -28,8 +29,8 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
   const [shape, setShape] = useState<ShapesTemplates["shapesTemplates"]>(null);
   const [dimensions, setDimensions] = useState<{[key: string]: number | string}>({});
   const [spacing, setSpacing] = useState('');
-  const [rows, setRows] = useState(0);
-  const [cols, setCols] = useState(0);
+  const [rows, setRows] = useState('');
+  const [cols, setCols] = useState('');
   const [fileName, setFileName] = useState('');
   const [svgFile, setSvgFile] = useState('');
 
@@ -56,24 +57,30 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
     getShape();
   }, [getShape]);
 
-  const handleSubmit = async (shouldMakeFile: boolean) => {
+  const handleSubmit = async (shouldMakeFile: boolean = true) => {
     const numbers: { [key: string]: number } = {}; 
     Object.keys(dimensions).forEach((key) => {
       numbers[key] = Number(dimensions[key]);
     });
     const numSpacing = spacing ? Number(spacing) : 0;
-    console.log({...numbers, numSpacing, rows, cols, fileName});
+    const numRows = rows ? Number(rows) : 1;
+    const numCols = cols ? Number(cols) : 1;
+    const shapeSpecs = {
+      ...numbers, 
+      spacing: numSpacing, 
+      rows: numRows, 
+      cols: numCols, 
+      fileName, 
+      shouldMakeFile
+    }
+    console.log(shapeSpecs)
     try {
-      const file = await fetch(`/api/generate_gasket`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({...numbers, spacing: numSpacing, rows, cols, fileName, shouldMakeFile}),
-      });
-      // save the returned file
-      const blob = await file.blob();
-      
+      const res = await makeDXF(
+        shapeSpecs,
+         
+        'https://generate-gasket-6jrllpvp7a-uc.a.run.app'
+      );
+      const blob = await res.body?.blob();      
       if (shouldMakeFile) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -120,16 +127,18 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
             onChange={(e) => setSpacing(e)}
           />
           <Input
+            aria-label='rows'
             style={{margin: '1rem'}}
             placeholder="Rows"
-            value={Number(rows)}
-            onChange={(e) => setRows(Number(e))}
+            value={rows}
+            onChange={(e) => setRows(e)}
           />
           <Input
+            aria-label='columns'
             style={{margin: '1rem'}}
             placeholder="Columns"
-            value={Number(cols)}
-            onChange={(e) => setCols(Number(e))}
+            value={cols}
+            onChange={(e) => setCols(e)}
           />
           <Input
             style={{margin: '1rem'}}
