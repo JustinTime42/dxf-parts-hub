@@ -45,9 +45,10 @@ const ShapeSelector: React.FC = () => {
     <div className='flex justify-center items-center'>
         {shapes.map((image, index) => (
           <div key={index}>
-            <h3>Select Part Template</h3>
+            <h3 className='mb-2'>Select Part Template</h3>
             <Link href={`/dashboard/${image.name}`} passHref>
-            <Image src={image.image_path} alt={`Image ${index}`} width={256} height={256}/>
+              <p>{image.name}</p>
+              <Image src={image.image_path} alt={`Image ${index}`} width={256} height={256}/>
             </Link>
           </div>
         ))}

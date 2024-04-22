@@ -22,14 +22,14 @@ export default function Navlinks({ user }: NavlinksProps) {
           <Logo />
         </Link>
         <nav className="ml-6 space-x-2 lg:block">
-          <Link href="/" className={s.link}>
+          {/* <Link href="/" className={s.link}>
             Pricing
           </Link>
           {user && (
             <Link href="/account" className={s.link}>
               Account
             </Link>
-          )}
+          )} */}
           {user && (
             <Link href="/dashboard" className={s.link}>
               Dashboard
@@ -37,7 +37,7 @@ export default function Navlinks({ user }: NavlinksProps) {
           )}
         </nav>
       </div>
-      <div className="flex justify-end space-x-8">
+      {/* <div className="flex justify-end space-x-8">
         {user ? (
           <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
             <input type="hidden" name="pathName" value={usePathname()} />
@@ -50,7 +50,7 @@ export default function Navlinks({ user }: NavlinksProps) {
             Sign In
           </Link>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

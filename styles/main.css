@@ -39,10 +39,17 @@ body {
 
 a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  @apply underline italic;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  @apply underline italic;
 }
 
 p a {
   @apply hover:underline;
+}
+
+h3 {
+  @apply text-2xl font-bold;
 }
 
 .animated {

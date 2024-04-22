@@ -6,6 +6,7 @@ import s from './Input.module.css';
 interface Props extends Omit<InputHTMLAttributes<any>, 'onChange'> {
   className?: string;
   onChange: (value: string) => void;
+  label?: string;
 }
 const Input = (props: Props) => {
   const { className, children, onChange, ...rest } = props;
@@ -20,15 +21,16 @@ const Input = (props: Props) => {
   };
 
   return (
-    <label>
+    <label className='flex flex-row items-center'>
+      {props.label && <span className='whitespace-nowrap'>{props.label}</span>}
       <input
-        className={rootClassName}
         onChange={handleOnChange}
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
         spellCheck="false"
         {...rest}
+        className="text-black"
       />
     </label>
   );

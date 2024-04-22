@@ -76,21 +76,25 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
     console.log(shapeSpecs)
     try {
       const res = await makeDXF(
-        shapeSpecs,
-         
+        shapeSpecs,         
         'https://generate-gasket-6jrllpvp7a-uc.a.run.app'
       );
-      const blob = await res.body?.blob();      
+      const dxfText = await res.body; 
       if (shouldMakeFile) {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${fileName}.dxf` || 'untitled.dxf';
-        a.click();
+        const dxfBlob = new Blob([dxfText], { type: 'application/dxf' }); 
+        const dxfUrl = URL.createObjectURL(dxfBlob);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = dxfUrl;
+        downloadLink.download = `${fileName || 'untitled'}.dxf`;
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click(); 
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(dxfUrl);
       }     
-      else {
-        setSvgFile(URL.createObjectURL(blob));
-      } 
+      // else {
+      //   setSvgFile(URL.createObjectURL(blob));
+      // }
     } catch (error) {
       alert('Error generating gasket');
     }
@@ -110,7 +114,7 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
                 <Input
                   style={{margin: '1rem'}}
                   key={index}
-                  placeholder={dimension.label}
+                  label={`${dimension.label} *`}
                   value={dimensions[dimension.name] || ''}
                   onChange={(e) => {
                       setDimensions({...dimensions, [dimension.name]: e})
@@ -121,12 +125,14 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
             })
           }
           <Input
+            label= 'Spacing'
             style={{margin: '1rem'}}
             placeholder="Spacing"          
             value={spacing || ''}
             onChange={(e) => setSpacing(e)}
           />
           <Input
+            label='Rows'
             aria-label='rows'
             style={{margin: '1rem'}}
             placeholder="Rows"
@@ -134,6 +140,7 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
             onChange={(e) => setRows(e)}
           />
           <Input
+            label='Columns'
             aria-label='columns'
             style={{margin: '1rem'}}
             placeholder="Columns"
@@ -141,6 +148,7 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
             onChange={(e) => setCols(e)}
           />
           <Input
+            label='File Name'
             style={{margin: '1rem'}}
             placeholder="File Name"
             value={fileName}
@@ -148,14 +156,14 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
           />
         </div>   
         <div> 
-          <Button 
+          {/* <Button 
             style={{margin: '1rem'}} 
             type="button" 
             color="primary"
             onClick={() => handleSubmit(false)}
           >
             Preview DXF
-          </Button>
+          </Button> */}
           <Button 
             style={{margin: '1rem'}} 
             type="button"  
@@ -166,14 +174,14 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
           </Button>    
         </div>
       </form>
-      <div>
+      {/* <div>
         <Image 
           src={svgFile}  
           alt="gasket" 
           width={250}
           height={250}
         />
-      </div>
+      </div> */}
     </div>
   );
 };
