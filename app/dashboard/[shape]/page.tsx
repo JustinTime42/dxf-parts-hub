@@ -77,7 +77,7 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
     try {
       const res = await makeDXF(
         shapeSpecs,         
-        'https://generate-gasket-6jrllpvp7a-uc.a.run.app'
+        'https://generate-flange-6jrllpvp7a-uc.a.run.app'
       );
       const dxfText = await res.body; 
       if (shouldMakeFile) {
@@ -92,9 +92,10 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
         document.body.removeChild(downloadLink);
         URL.revokeObjectURL(dxfUrl);
       }     
-      // else {
-      //   setSvgFile(URL.createObjectURL(blob));
-      // }
+      else {
+        const blob = new Blob([dxfText], { type: 'image/svg+xml' });
+        setSvgFile(URL.createObjectURL(blob));
+      }
     } catch (error) {
       alert('Error generating gasket');
     }
@@ -156,14 +157,14 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
           />
         </div>   
         <div> 
-          {/* <Button 
+          <Button 
             style={{margin: '1rem'}} 
             type="button" 
             color="primary"
             onClick={() => handleSubmit(false)}
           >
             Preview DXF
-          </Button> */}
+          </Button>
           <Button 
             style={{margin: '1rem'}} 
             type="button"  
@@ -174,14 +175,15 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
           </Button>    
         </div>
       </form>
-      {/* <div>
+      {svgFile &&
+      <div>
         <Image 
           src={svgFile}  
           alt="gasket" 
           width={250}
           height={250}
         />
-      </div> */}
+      </div>}
     </div>
   );
 };
