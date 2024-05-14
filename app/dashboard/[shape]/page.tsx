@@ -3,18 +3,15 @@ import React, { use, useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
-import { Database } from '@/types_db';
-import { createClient } from '@/utils/supabase/client';
 import { makeDXF } from '@/app/api/makeDXF';
+import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
+import { collection, doc, query, where } from 'firebase/firestore';
+import { db } from '@/utils/firebase';
 
 type ShapeEditorProps = {
   params: {
     shape: string;
   };
-};
-
-type ShapesTemplates = {
-  shapesTemplates: Database['public']['Tables']['shapes_templates']['Row'] | null;
 };
 
 type Dimension = {
@@ -24,9 +21,7 @@ type Dimension = {
 };
 
 const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: string } }) => {
-
-  const supabase = createClient();
-  const [shape, setShape] = useState<ShapesTemplates["shapesTemplates"]>(null);
+  const [value, loading, error] = useDocument(doc(db, 'part_templates', params.shape));
   const [dimensions, setDimensions] = useState<{[key: string]: number | string}>({});
   const [spacing, setSpacing] = useState('');
   const [rows, setRows] = useState('');
@@ -34,28 +29,9 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
   const [fileName, setFileName] = useState('');
   const [svgFile, setSvgFile] = useState('');
 
-
-  const getShape = useCallback(async () => {
-    try {
-      const { data, error } = await supabase
-        .from('shapes_templates')
-        .select('*')
-        .eq('name', params.shape)
-        .single();
-      if (error) {
-        throw error;
-      }
-      if (data) {
-        setShape(data);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  }, [supabase, params.shape]);
-
   useEffect(() => {
-    getShape();
-  }, [getShape]);
+    alert(value?.data());
+  }, [value]);
 
   const handleSubmit = async (shouldMakeFile: boolean = true) => {
     const numbers: { [key: string]: number } = {}; 
@@ -67,17 +43,17 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
     const numCols = cols ? Number(cols) : 1;
     const shapeSpecs = {
       ...numbers, 
+      partType: value?.id,
       spacing: numSpacing, 
       rows: numRows, 
       cols: numCols, 
       fileName, 
       shouldMakeFile
     }
-    console.log(shapeSpecs)
     try {
       const res = await makeDXF(
         shapeSpecs,         
-        'https://generate-flange-6jrllpvp7a-uc.a.run.app'
+        'http://127.0.0.1:5001/dxf-parts-hu/us-central1/part_request'
       );
       const dxfText = await res.body; 
       if (shouldMakeFile) {
@@ -101,16 +77,19 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
     }
   };
 
-  if (!shape) {
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (!value) {
     return <div>Shape not found</div>;
   }
   return (
-    <div>      
-      <form>
+    <div className="p-2 max-w-prose border border-gray-300 rounded-lg">
+      <form className="">
         <div>
           {
-            shape.dimensions &&
-            (shape.dimensions as Array<Dimension>).map((dimension, index) => {
+            value.data()?.dimensions &&
+            (value.data()?.dimensions as Array<Dimension>).map((dimension, index) => {
               return (
                 <Input
                   style={{margin: '1rem'}}

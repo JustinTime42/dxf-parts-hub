@@ -1,34 +1,33 @@
 import CustomerPortalForm from '@/components/ui/AccountForms/CustomerPortalForm';
-import EmailForm from '@/components/ui/AccountForms/EmailForm';
-import NameForm from '@/components/ui/AccountForms/NameForm';
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+
+// import { createClient } from '@/utils/supabase/server';
+// import { redirect } from 'next/navigation';
 
 export default async function Account() {
-  const supabase = createClient();
+  // const supabase = createClient();
 
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user }
+  // } = await supabase.auth.getUser();
 
-  const { data: userDetails } = await supabase
-    .from('users')
-    .select('*')
-    .single();
+  // const { data: userDetails } = await supabase
+  //   .from('users')
+  //   .select('*')
+  //   .single();
 
-  const { data: subscription, error } = await supabase
-    .from('subscriptions')
-    .select('*, prices(*, products(*))')
-    .in('status', ['trialing', 'active'])
-    .maybeSingle();
+  // const { data: subscription, error } = await supabase
+  //   .from('subscriptions')
+  //   .select('*, prices(*, products(*))')
+  //   .in('status', ['trialing', 'active'])
+  //   .maybeSingle();
 
-  if (error) {
-    console.log(error);
-  }
+  // if (error) {
+  //   console.log(error);
+  // }
 
-  if (!user) {
-    return redirect('/signin');
-  }
+  // if (!user) {
+  //   return redirect('/signin');
+  // }
 
   return (
     <section className="mb-32 bg-black">
@@ -38,14 +37,12 @@ export default async function Account() {
             Account
           </h1>
           <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
-            We partnered with Stripe for a simplified billing.
+            Coming Soon!
           </p>
         </div>
       </div>
       <div className="p-4">
-        <CustomerPortalForm subscription={subscription} />
-        <NameForm userName={userDetails?.full_name ?? ''} />
-        <EmailForm userEmail={user.email} />
+        {/* <CustomerPortalForm subscription={subscription} /> */}
       </div>
     </section>
   );

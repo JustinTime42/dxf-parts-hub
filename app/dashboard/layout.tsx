@@ -1,3 +1,4 @@
+import Library from '@/components/ui/Library/Library';
 import Link from 'next/link';
 import React from 'react';
 
@@ -18,9 +19,9 @@ const DashboardLayout = ({
             <div className="w-3/4 p-4">
                 {children}
             </div>
-            <div className="w-1/4 p-4">
-                {/* Add your LibraryList component here */}
-            </div>
+            {/* <div className="w-1/4 p-4">
+                <Library />
+            </div> */}
         </div>
     );
 };

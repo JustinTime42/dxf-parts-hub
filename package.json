@@ -24,6 +24,8 @@
     "supabase:pull": "npx supabase pull"
   },
   "dependencies": {
+    "@auth/firebase-adapter": "^2.1.0",
+    "@firebase/auth": "^1.7.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@stripe/stripe-js": "2.4.0",
     "@supabase/ssr": "^0.1.0",
@@ -31,10 +33,15 @@
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",
     "clsx": "^2.1.0",
+    "firebase": "^10.11.1",
+    "firebase-admin": "^12.1.0",
+    "firebaseui": "^6.1.0",
     "lucide-react": "0.330.0",
     "next": "14.1.0",
+    "next-auth": "5.0.0-beta.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-merge-refs": "^2.1.1",
     "stripe": "^14.16.0",
     "tailwind-merge": "^2.2.1",
@@ -42,6 +49,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/firebase": "^3.2.1",
     "@types/node": "^20.11.17",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
@@ -54,7 +62,6 @@
     "postcss": "^8.4.35",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
-    "supabase": "^1.142.2",
     "typescript": "^5.3.3"
   }
 }
