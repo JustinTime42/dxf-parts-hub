@@ -1,12 +1,13 @@
 'use client'
-import React, { use, useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { makeDXF } from '@/app/api/makeDXF';
-import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
-import { collection, doc, query, where } from 'firebase/firestore';
+import { useDocument } from 'react-firebase-hooks/firestore';
+import { doc } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
+import AsyncActionButton from '@/components/ui/Button/AsyncActionButton';
 
 type ShapeEditorProps = {
   params: {
@@ -29,9 +30,6 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
   const [fileName, setFileName] = useState('');
   const [svgFile, setSvgFile] = useState('');
 
-  useEffect(() => {
-    console.log(value?.data());
-  }, [value]);
   const handleSubmit = async (shouldMakeFile: boolean = true) => {
     const numbers: { [key: string]: number } = {}; 
     Object.keys(dimensions).forEach((key) => {
@@ -52,7 +50,7 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
     try {
       const res = await makeDXF(
         shapeSpecs,         
-        'https://part-request-6jrllpvp7a-uc.a.run.app'
+        'http://127.0.0.1:5001/dxf-parts-hu/us-central1/part_request'
       );
       const dxfText = await res.body; 
       if (shouldMakeFile) {
@@ -135,22 +133,16 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
           />
         </div>   
         <div> 
-          <Button 
+          <AsyncActionButton 
             style={{margin: '1rem'}} 
-            type="button" 
-            color="primary"
-            onClick={() => handleSubmit(false)}
-          >
-            Preview DXF
-          </Button>
-          <Button 
+            asyncAction={() => handleSubmit(false)}
+            label="Generate Preview"
+          />
+          <AsyncActionButton 
             style={{margin: '1rem'}} 
-            type="button"  
-            color="primary"
-            onClick={() => handleSubmit(true)}
-          >
-            Generate DXF
-          </Button>    
+            asyncAction={() => handleSubmit(true)}
+            label="Generate DXF"
+          />    
         </div>
       </form>
       {svgFile &&

@@ -32,6 +32,7 @@ const Navlinks = () => {
         <Link href="/" aria-label="Logo">
           <Image src="/favicon.ico" alt="Logo" width={40} height={40} />
         </Link>
+        <h1 className="text-2xl font-bold">DXF Parts Hub</h1>
         {/* <Signup /> */}
         <nav className="ml-6 space-x-2 lg:block">
           {/* <Link href="/" className={s.link}>

@@ -6,8 +6,7 @@ const LandingPage = () => {
     <div className="bg-gray-900 text-white min-h-screen">
       {/* Header */}
       <header className="bg-gray-800 text-white py-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">DXF Parts Hub</h1>
+        <div className="container mx-auto flex justify-between items-center">          
           <nav>
             <Link href="#features" passHref>
               <span className="mx-2 cursor-pointer">Features</span>
