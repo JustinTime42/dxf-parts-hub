@@ -12,29 +12,29 @@ const ShapeCard = ({name, imageUrl, id, description}: {name: string, imageUrl: s
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
-    useEffect(() => {
-        setLoading(true);
-        // For some reason, download from google is not working. 
-        // TODO fix it!
-        downloadImage("template_images/gasket-template.png").then((url) => {
-            setValue(url);
-            setLoading(false);
-        }).catch((err) => {
-            setError(err);
-            setLoading(false);
-        }).finally(() => {
-            setLoading(false);
-        });
-    }, [imageUrl]);
+    // useEffect(() => {
+    //     setLoading(true);
+    //     // For some reason, download from google is not working. 
+    //     // TODO fix it!
+    //     downloadImage("template_images/gasket-template.png").then((url) => {
+    //         setValue(url);
+    //         setLoading(false);
+    //     }).catch((err) => {
+    //         setError(err);
+    //         setLoading(false);
+    //     }).finally(() => {
+    //         setLoading(false);
+    //     });
+    // }, [imageUrl]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
 
-    if (error || !value) {
-        console.error('Failed to load image or URL is undefined.');
-        return <div>Error loading image.</div>;
-    }
+    // if (error || !value) {
+    //     console.error('Failed to load image or URL is undefined.');
+    //     return <div>Error loading image.</div>;
+    // }
 	return (
 		<div className="m-3">
 			<Link href={`/dashboard/${id}`} passHref>

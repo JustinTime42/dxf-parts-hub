@@ -39,6 +39,9 @@ const Navlinks = () => {
             Pricing
           </Link>
           */}
+          <Link href="/" className={s.link}>
+            Home
+          </Link>
           {user && (
             <Link href="/account" className={s.link}>
               Account

@@ -1,9 +1,14 @@
+'use client';
 import CustomerPortalForm from '@/components/ui/AccountForms/CustomerPortalForm';
 
-// import { createClient } from '@/utils/supabase/server';
-// import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/utils/firebase';
 
-export default async function Account() {
+export default function Account() {
+  const router = useRouter();
+  const [user, authLoading, authError] = useAuthState(auth);
+
   // const supabase = createClient();
 
   // const {
@@ -37,7 +42,10 @@ export default async function Account() {
             Account
           </h1>
           <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
-            Coming Soon!
+            Hello {user?.email}! Here you will be able to manage your account settings, provide feedback and access your subscription details.
+          </p>
+          <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
+            We are eager for any feedback you have on your experience. Please email us at <a href="mailto:justin@routeworks.app">justin@routeworks.app</a>.
           </p>
         </div>
       </div>

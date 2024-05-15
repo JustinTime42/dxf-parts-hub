@@ -8,8 +8,8 @@ import 'styles/main.css';
 // import { AuthProvider } from '@/contexts/AuthContext';
 
 const meta = {
-  title: 'DXF Parts Hub',
-  description: 'Quickly customize and generate DXF files for standard parts',
+  title: 'DXF Parts Hub | Create Custom DXF Files for CNC Cutting | Try for Free',
+  description: 'DXF Parts Hub - Simplify your CNC cutting process with our extensive library of DXF templates for machine shops. Create custom DXF files for flanges, brackets, squares, and more in seconds. Boost productivity and efficiency with our easy-to-use CNC software. Try it for free!',
   cardImage: '/og.png',
   robots: 'follow, index',
   favicon: '/favicon.ico',
@@ -21,10 +21,10 @@ export async function generateMetadata(): Promise<Metadata> {
     title: meta.title,
     description: meta.description,
     referrer: 'origin-when-cross-origin',
-    keywords: ['Vercel', 'Supabase', 'Next.js', 'Stripe', 'Subscription'],
-    authors: [{ name: 'Vercel', url: 'https://vercel.com/' }],
-    creator: 'Vercel',
-    publisher: 'Vercel',
+    keywords: ['CAD', 'CNC', 'Machine Shops', 'DXF Files', 'CAD Design', 'CNC Cutter Tables', 'CNC Software', 'CNC Productivity'],
+    authors: [{ name: 'Justin Schneider', url: 'https:/routeworks.app/' }],
+    creator: 'Route Works LLC',
+    publisher: 'Route Works LLC',
     robots: meta.robots,
     icons: { icon: meta.favicon },
     metadataBase: new URL(meta.url),
@@ -38,8 +38,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      site: '@Vercel',
-      creator: '@Vercel',
+      site: '@_JustinTime42',
+      creator: '@_JustinTime42',
       title: meta.title,
       description: meta.description,
       images: [meta.cardImage]
