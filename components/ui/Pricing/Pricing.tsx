@@ -4,7 +4,7 @@ import Button from '@/components/ui/Button';
 import LogoCloud from '@/components/ui/LogoCloud';
 import type { Tables } from '@/types_db';
 import { getStripe } from '@/utils/stripe/client';
-import { checkoutWithStripe } from '@/utils/stripe/server';
+// import { checkoutWithStripe } from '@/utils/stripe/server';
 import { getErrorRedirect } from '@/utils/helpers';
 import { User } from '@supabase/supabase-js';
 import cn from 'classnames';
@@ -54,29 +54,29 @@ export default function Pricing({ user, products, subscription }: Props) {
       return router.push('/signin/signup');
     }
 
-    const { errorRedirect, sessionId } = await checkoutWithStripe(
-      price,
-      currentPath
-    );
+    // const { errorRedirect, sessionId } = await checkoutWithStripe(
+    //   price,
+    //   currentPath
+    // );
 
-    if (errorRedirect) {
-      setPriceIdLoading(undefined);
-      return router.push(errorRedirect);
-    }
+    // if (errorRedirect) {
+    //   setPriceIdLoading(undefined);
+    //   return router.push(errorRedirect);
+    // }
 
-    if (!sessionId) {
-      setPriceIdLoading(undefined);
-      return router.push(
-        getErrorRedirect(
-          currentPath,
-          'An unknown error occurred.',
-          'Please try again later or contact a system administrator.'
-        )
-      );
-    }
+    // if (!sessionId) {
+    //   setPriceIdLoading(undefined);
+    //   return router.push(
+    //     getErrorRedirect(
+    //       currentPath,
+    //       'An unknown error occurred.',
+    //       'Please try again later or contact a system administrator.'
+    //     )
+    //   );
+    // }
 
-    const stripe = await getStripe();
-    stripe?.redirectToCheckout({ sessionId });
+    // const stripe = await getStripe();
+    // stripe?.redirectToCheckout({ sessionId });
 
     setPriceIdLoading(undefined);
   };

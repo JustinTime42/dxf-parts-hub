@@ -2,17 +2,20 @@
 import React, { useState } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '@/utils/firebase'; 
+import { useRouter } from 'next/navigation';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
+  const router = useRouter();
 
   const handleSignup = async () => {
     try {
       await createUserWithEmailAndPassword(email, password);
       setEmail('');
       setPassword('');
+      router.push('/');
     } catch (error) {
       console.error('Error signing up:', error);
     }

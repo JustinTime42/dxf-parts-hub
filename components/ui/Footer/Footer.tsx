@@ -2,11 +2,22 @@ import Link from 'next/link';
 
 import Logo from '@/components/icons/Logo';
 import GitHub from '@/components/icons/GitHub';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="mx-auto max-w-[1920px] px-6 bg-zinc-900">
-      <div className="grid grid-cols-1 gap-8 py-12 text-white transition-colors duration-150 border-b lg:grid-cols-12 border-zinc-600 bg-zinc-900">
+    <footer className="mx-auto max-w-[1920px] px-6 bg-zinc-900 p-3">
+            <Link
+            href="/"
+            className="flex items-center flex-initial font-bold md:mr-24"
+          >
+            <span className="mr-2 border rounded-full border-zinc-700">
+              <Image src="/favicon.ico" alt="Route Works Logo" width={40} height={40} />
+            </span>
+            <span><p>&copy; 2024 Route Works LLC. All rights reserved.</p></span>
+          </Link>
+      {/* <div className="grid grid-cols-1 gap-8 py-12 text-white transition-colors duration-150 border-b lg:grid-cols-12 border-zinc-600 bg-zinc-900">
+
         <div className="col-span-1 lg:col-span-2">
           <Link
             href="/"
@@ -15,10 +26,10 @@ export default function Footer() {
             <span className="mr-2 border rounded-full border-zinc-700">
               <Logo />
             </span>
-            <span><p>&copy; 2024 CNC Template Creator. All rights reserved.</p></span>
+            <span><p>&copy; 2024 Route Works LLC. All rights reserved.</p></span>
           </Link>
-        </div>
-        <div className="col-span-1 lg:col-span-2">
+        </div> */}
+        {/* <div className="col-span-1 lg:col-span-2">
           <ul className="flex flex-col flex-initial md:flex-1">
             <li className="py-3 md:py-0 md:pb-4">
               <Link
@@ -105,8 +116,8 @@ export default function Footer() {
               className="inline-block h-6 ml-4 text-white"
             />
           </a>
-        </div>
-      </div>
+  </div> */}
+      {/* </div> */}
     </footer>
   );
 }

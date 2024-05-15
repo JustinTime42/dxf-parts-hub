@@ -30,9 +30,8 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
   const [svgFile, setSvgFile] = useState('');
 
   useEffect(() => {
-    alert(value?.data());
+    console.log(value?.data());
   }, [value]);
-
   const handleSubmit = async (shouldMakeFile: boolean = true) => {
     const numbers: { [key: string]: number } = {}; 
     Object.keys(dimensions).forEach((key) => {
@@ -53,7 +52,7 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
     try {
       const res = await makeDXF(
         shapeSpecs,         
-        'http://127.0.0.1:5001/dxf-parts-hu/us-central1/part_request'
+        'https://part-request-6jrllpvp7a-uc.a.run.app'
       );
       const dxfText = await res.body; 
       if (shouldMakeFile) {
@@ -157,7 +156,7 @@ const ShapeEditor: React.FC<ShapeEditorProps> = ({ params }: { params: { shape: 
       {svgFile &&
       <div>
         <Image 
-          src={svgFile}  
+          src={svgFile}   
           alt="gasket" 
           width={250}
           height={250}
